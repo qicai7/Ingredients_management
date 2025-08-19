@@ -1,0 +1,41 @@
+# FuelPHP キャッシュ・ログ・一時ファイル
+fuel/app/cache/
+fuel/app/logs/
+fuel/app/tmp/
+
+# OS 関連
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Composer
+vendor/
+
+# Docker
+docker/*.log
+*.env
+
+# IDE/エディタ関連（必要に応じて追加）
+.idea/
+*.swp
+# FuelPHP キャッシュ・ログ・一時ファイル
+fuel/app/cache/
+fuel/app/logs/
+fuel/app/tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Composer
+vendor/
+
+# Docker
+docker/*.log
+*.env
+
