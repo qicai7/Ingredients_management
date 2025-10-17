@@ -1,0 +1,161 @@
+/* base */
+body {
+  font-family: "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+  background-color: #ffd700;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* layout */
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 60px auto;
+  background-color: #fffaf0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+/* spacing */
+.mt10 { margin-top: 10px; }
+.mt20 { margin-top: 20px; }
+.ml10 { margin-left: 10px; }
+.ml20 { margin-left: 20px; }
+.p10 { padding: 10px; }
+.p20 { padding: 20px; }
+
+/* flexbox */
+.flex { display: flex; }
+.flex-between { justify-content: space-between; }
+.flex-center { justify-content: center; align-items: center; }
+
+/* typography */
+.text-center { text-align: center; }
+.text-blue { color: #007bff; }
+.text-blue:hover { text-decoration: underline; }
+
+/* list */
+.list-none { list-style: none; padding: 0; }
+.border-b { border-bottom: 1px solid #ddd; }
+.border-none { border-bottom: none; }
+
+/* button/link */
+.btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* フォーム縦並び用 */
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 要素間の縦間隔 */
+}
+
+/* 入力欄のスタイル */
+.input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* エラーメッセージ */
+.text-red {
+    color: red;
+    text-align: center;
+}
+
+/* ボタン幅を入力欄に揃える */
+form .btn {
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+
+/* 個別ボタン色 */
+.btn-logout {
+    background-color: #ff8c00; 
+}
+
+.btn-edit {
+    background-color: #28a745; 
+}
+
+.btn-delete {
+    background-color: #ff4d4f; 
+}
+
+/* ホバー */
+.btn-logout:hover {
+    background-color: #d2691e;
+}
+
+.btn-edit:hover {
+    background-color: #218838;
+}
+
+.btn-delete:hover {
+    background-color: #d9363e;
+}
+
+/* バツボタン専用 */
+.back-wrapper {
+    position: absolute;   /* コンテナ基準で絶対配置 */
+    top: -20px;           /* コンテナに少し重なる */
+    right: -20px;             /* コンテナ右端に揃える */
+}
+
+.btn-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #ff8c00;
+    color: white;
+    font-size: 36px;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    position: relative; /* 文字を絶対配置する場合に必要 */
+}
+
+.btn-close span {
+    display: inline-block;
+    position: relative;
+    top: -2px;   /* 上に2pxずらす */
+    left: 0;     /* 横方向は必要に応じて調整 */
+}
+
+.btn-close:hover {
+    background-color: #d2691e;
+}
+
+
+
+.logout-wrapper {
+  position: absolute;  /* コンテナ内で絶対配置 */
+  top: -46px;           /* コンテナ内の上からの距離 */
+  right: 20px;         /* コンテナ内の右端に揃える */
+}
+
+
+.text-center { text-align: center; }
+.mt20 { margin-top: 20px; }

@@ -6,7 +6,7 @@
 return array(
 	'default' => array(
 		'connection'  => array(
-			'dsn'        => 'mysql:host=localhost;dbname=fuel_prod',
+			'dsn'        => 'mysql:host=db;dbname=recipe_ingredients_db',
 			'username'   => 'fuel_app',
 			'password'   => 'super_secret_password',
 		),
