@@ -1,0 +1,15 @@
+/* public/assets/css/knockout_validation.css */
+
+/* エラーメッセージ（registration.jsで messageClass: 'error-message' と設定） */
+.error-message {
+    color: #cc0000; /* 赤色 */
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+}
+
+/* エラーのある入力フィールド（registration.jsで errorClass: 'error-field' と設定） */
+.error-field {
+    border: 2px solid #cc0000; /* 枠線を赤くする */
+    background-color: #fffafa; /* 薄い赤の背景 */
+}

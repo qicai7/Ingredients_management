@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>新規登録</title>
     <link rel="stylesheet" href="<?= Uri::create('assets/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= Uri::create('assets/css/knockout_validation.css') ?>">
 </head>
 <body>
-
+    
 <div class="container" style="max-width: 400px; margin: 50px auto;">
 
     <h1 class="text-center mt20">新規登録</h1>
@@ -17,14 +18,22 @@
     <?php endif; ?>
 
     <!-- 新規登録フォーム -->
-    <form action="" method="post" class="mt20 flex-col">
+    <form data-bind="submit: register" class="mt20 flex-col"> 
         <label for="username">ユーザー名</label>
-        <input type="text" name="username" id="username" class="input" required>
+        <input type="text" name="username" id="username" class="input" 
+               data-bind="value: username, valueUpdate: 'afterkeydown'" >
 
         <label for="password">パスワード</label>
-        <input type="password" name="password" id="password" class="input" required>
+        <input type="password" name="password" id="password" class="input" 
+               data-bind="value: password" >
 
-        <button type="submit" class="btn btn-logout">登録</button>
+        <label for="password_confirm">パスワード確認</label>
+        <input type="password" name="password_confirm" id="password_confirm" class="input" 
+               data-bind="value: passwordConfirm" >
+
+        <button type="submit" class="btn btn-logout" >
+            登録
+        </button>
     </form>
 
     <p class="mt20 text-center">
@@ -33,6 +42,11 @@
     </p>
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
+<?php echo Asset::js('knockout.min.js'); ?>
+<?php echo Asset::js('knockout.validation.min.js'); ?>
+<?php echo Asset::js('registration.js'); ?>
 
 </body>
 </html>

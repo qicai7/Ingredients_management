@@ -28,13 +28,12 @@
         <ul class="list-none mt20">
         <?php foreach ($recipes as $recipe): ?>
             <li class="p10 border-b flex flex-between">
-                <a href="<?= Uri::create('recipe/view/'.$recipe->id) ?>" class="text-blue">
-                    <?= htmlspecialchars($recipe->name) ?>
+                <a href="<?= Uri::create('recipe/view/'.$recipe['id']) ?>" class="text-blue">
+                    <?= htmlspecialchars($recipe['name']) ?>
                 </a>
                 <div>
-                    <a href="<?= Uri::create('recipe/edit/'.$recipe->id) ?>" class="btn ml10 btn-edit">編集</a>
-                    <a href="<?= Uri::create('recipe/confirm_delete/'.$recipe->id) ?>" class="btn ml10 btn-delete">削除</a>
-
+                    <a href="<?= Uri::create('recipe/edit/'.$recipe['id']) ?>" class="btn ml10 btn-edit">編集</a>
+                    <a href="<?= Uri::create('recipe/confirm_delete/'.$recipe['id']) ?>" class="btn ml10 btn-delete">削除</a>
                 </div>
             </li>
         <?php endforeach; ?>

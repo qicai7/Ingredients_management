@@ -16,16 +16,12 @@ class Controller_Home extends Controller
     
     public function action_index()
     {
-        // ログインチェック
-        /*if (!Auth::check()) {
-            Response::redirect('user/login');
-        }*/
-
+        // ログインチェックは before() で行われていると想定
+        
         // 自分のレシピだけ取得
         $user_id = Auth::get_user_id()[1]; // [1] はユーザーID
-        $data['recipes'] = Model_Recipe::query()
-            ->where('user_id', $user_id)
-            ->get();
+        
+        $data['recipes'] = Model_Recipe::get_recipes_by_user_id($user_id);
 
         // ビューを表示
         return View::forge('home/index', $data);

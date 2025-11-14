@@ -1,35 +1,15 @@
 <?php
 class Controller_User extends Controller
 {
-    // 新規登録
+    // 新規登録 (ビュー表示専用)
     public function action_register()
     {
-        $error = '';
+        // $error 変数は、ビューに渡すために初期値として残します
+        $error = ''; 
 
-        if (Input::post()) {
-            $username = trim(Input::post('username'));
-            $password = Input::post('password');
-
-            // 入力不足チェック
-            if ($username === '' || $password === '') {
-                $error = '入力情報が不足しています';
-            } else {
-                // パスワードをハッシュ化
-                $hashed_password = Auth::instance()->hash_password($password);
-
-                // users テーブルに追加
-                \DB::insert('users')->set([
-                    'username'   => $username,
-                    'password'   => $hashed_password,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ])->execute();
-
-                // 登録成功したらログイン画面へ
-                Response::redirect('user/login');
-            }
-        }
-
+        // 従来のフォーム送信処理（Input::post() ブロック）は削除します
+        
+        // ビューを表示
         return Response::forge(View::forge('user/register', ['error' => $error]));
     }
 
@@ -52,5 +32,4 @@ class Controller_User extends Controller
 
         return View::forge('user/login', ['error' => $error]);
     }
-
 }
