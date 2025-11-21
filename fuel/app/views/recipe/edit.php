@@ -18,7 +18,7 @@
   <form method="post" class="mt20">
       <div class="mt10">
           <label>レシピ名:</label>
-          <input type="text" name="name" value="<?= htmlspecialchars($recipe->name) ?>" required>
+          <input type="text" name="name" value="<?= htmlspecialchars($recipe['name']) ?>" required>
       </div>
 
       <div id="ingredients-area" class="mt20">
