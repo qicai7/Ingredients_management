@@ -12,7 +12,7 @@
   <h1 class="text-center mt20">レシピ詳細</h1>
 
   <!-- レシピ名 -->
-  <h2 class="text-center mt20"><?= htmlspecialchars($recipe->name) ?></h2>
+  <h2 class="text-center mt20"><?= htmlspecialchars($recipe['name']) ?></h2>
 
   <!-- 材料一覧 -->
   <?php if (!empty($ingredients)): ?>
@@ -29,7 +29,7 @@
   <?php endif; ?>
 
   <div class="text-center mt20">
-      <a href="<?= Uri::create('recipe/edit/'.$recipe->id) ?>" class="btn btn-edit">編集</a>
+      <a href="<?= Uri::create('recipe/edit/'.$recipe['id']) ?>" class="btn btn-edit">編集</a>
   </div>
 
 </div>

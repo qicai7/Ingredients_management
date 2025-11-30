@@ -72,22 +72,28 @@ class Controller_Recipe extends Controller
     // レシピ詳細画面
     public function action_view($id = null)
     {
-        if (!$id) {
-            Response::redirect('home/index');
+        // 1. IDがURLから渡されているかを確認
+        if (is_null($id)) {
+            // IDが渡されていない場合は即座にリダイレクト
+            return Response::redirect('home/index');
         }
 
         $user_id = Auth::get_user_id()[1];
 
-        // ORM呼び出しからModelのDBクラスメソッドに置き換え
+        // DBクラスメソッドに置き換え
         $recipe = Model_Recipe::get_by_id_and_user_id($id, $user_id);
 
-        if (!$recipe) {
-            Response::redirect('home/index');
+        // 2. 【修正ポイント】レシピが見つからなかった場合の処理を確実に行う
+        // (Modelが null または false を返すと仮定)
+        if (empty($recipe)) { // 配列でも nullでも falseでも、空なら処理する
+            // 見つからなかった場合は即座にリダイレクト
+            return Response::redirect('home/index'); 
         }
 
         // DB直接操作からModelのDBクラスメソッドに置き換え
         $ingredients = Model_RecipeIngredient::get_ingredients_with_amount_by_recipe_id($recipe['id']);
 
+        // 3. Viewに渡す (この時点で $recipe は null ではないことが保証される)
         return View::forge('recipe/view', [
             'recipe'      => $recipe,
             'ingredients' => $ingredients
