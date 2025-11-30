@@ -19,6 +19,9 @@
 
     <!-- 新規登録フォーム -->
     <form data-bind="submit: register" class="mt20 flex-col"> 
+
+        <input type="hidden" name="csrf_token" id="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+
         <label for="username">ユーザー名</label>
         <input type="text" name="username" id="username" class="input" 
                data-bind="value: username, valueUpdate: 'afterkeydown'" >

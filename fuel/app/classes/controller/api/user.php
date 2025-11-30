@@ -6,20 +6,54 @@
 // RESTfulなAPIとしてJSON応答を行うため、Controller_Restを継承
 class Controller_Api_User extends \Controller_Rest
 {
+    /**
+     * 【最終解決策】全てのGETリクエストを初期化段階で完全に遮断する
+     * どのメソッド（post_registerなど）が実行されるよりも前にチェックする
+     */
+    public function before()
+    {
+        // 親クラスのbefore()を実行 (必須)
+        parent::before();
+        
+        // リクエストメソッドがGETであれば、即座に例外を投げる
+        if (\Input::method() === 'GET')
+        {
+            // これでJSONを返さずに、正しいコントローラーに処理が渡されることを期待
+            throw new \HttpNotFoundException(); 
+        }
+    }
+
     // POST /api/user/register のリクエストを処理
     // Knockout.jsのAJAXリクエストの送信先です
     public function post_register()
     {
-        // 1. 【Controllerの役割】POSTデータ取得と基本的な整形
+        //  1. 【CSRF対策】トークンの検証 (最優先) 
+        $session_token = \Session::get('csrf_token');
+        $posted_token = \Input::post('csrf_token');
+
+        // トークン不一致またはセッション切れのチェック
+        if (empty($session_token) || $session_token !== $posted_token) {
+            // 不正なリクエストとして即座に処理を停止し、エラーレスポンスを返す
+            \Log::warning('CSRF token mismatch detected during registration.');
+            return $this->response([
+                'success' => false,
+                'message' => '不正なリクエストです。'
+            ], 403); // 403 Forbidden がセキュリティエラーとして適切
+        }
+
+        //  検証成功後、トークンを削除（ワンタイム利用）
+        \Session::delete('csrf_token');
+
+        // 2. 【Controllerの役割】POSTデータ取得と基本的な整形
         $username = trim(\Input::post('username'));
         $password = \Input::post('password');
-        $email    = trim(\Input::post('username')); // registration.jsでemailフィールドを定義している前提
+        $email    = trim(\Input::post('email')); // registration.jsでemailフィールドを定義している前提
 
-        // 2. サーバーサイドでの必須データチェック (Controllerで実施)
-        if (empty($username) || empty($password) || empty($email)) {
+        //  サーバーサイドでの必須データチェック (Controllerで実施)
+        if (empty($username) || empty($password)) {
              return $this->response([
                 'success' => false,
-                'message' => 'ユーザー名、パスワード、メールアドレスは必須です。'
+                'message' => 'ユーザー名、パスワードは必須です。'
             ], 400); // Bad Request
         }
 

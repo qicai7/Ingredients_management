@@ -20,7 +20,7 @@ const RegistrationViewModel = function() {
 
     // 【追加】メールアドレスの定義 (Controller/Modelで処理するため必須)
     self.email = ko.observable('').extend({
-        required: { message: 'メールアドレスは必須です' },
+        //required: { message: 'メールアドレスは必須です' },
         email: { message: '有効なメールアドレス形式ではありません' }
     });
 
@@ -47,27 +47,33 @@ const RegistrationViewModel = function() {
 
     // 登録処理
     self.register = function() {
-        // if (!self.isFormValid()) {
-        //     // エラーがあれば、すべてのメッセージを表示して処理を中断
-        //     self.errors.showAllMessages(true);
-        //     alert('入力エラーがあります。');
-        //     return;
-        // }
+         if (!self.isFormValid()) {
+             // エラーがあれば、すべてのメッセージを表示して処理を中断
+             self.errors.showAllMessages(true);
+             alert('入力エラーがあります。');
+             return;
+         }
 
         // --- ここからAJAX通信ロジック ---
 
+        // 0.【追加】HTMLからCSRFトークンを取得
+        const csrfToken = $('#csrf_token').val();
+
         // 1. 送信するデータを準備
-        // ko.toJS()でobservableを解除し、JSONで送信できるプレーンなオブジェクトにする
         const dataToSend = {
             username: self.username(),
             email: self.email(),
-            password: self.password()
+            password: self.password(),
+            
+            // 2. 【追加】CSRFトークンをデータに含める
+            csrf_token: csrfToken 
         };
         
-        // サーバーに送る必要のない確認用パスワードを削除（Controllerの整形処理を減らす）
+        // サーバーに送る必要のない確認用パスワードを削除
         delete dataToSend.passwordConfirm; 
         console.log(dataToSend.username)
-        // 2. AJAXリクエストの実行
+
+        // 3. AJAXリクエストの実行
         $.ajax({
             // 作成したAPIコントローラーのURIを指定
             url: '/api/user/register', 
@@ -88,6 +94,11 @@ const RegistrationViewModel = function() {
             error: function(xhr, status, error) {
                 // 通信エラーやサーバーエラー（500など）
                 // サーバーから返されたエラーメッセージがあれば表示
+                if (xhr.status === 403) {
+                    alert('セキュリティエラー：ページを更新します。');
+                    window.location.reload(); // 🚨 403エラー時に強制リロード
+                    return;
+                }
                 const message = xhr.responseJSON ? xhr.responseJSON.message : '予期せぬ通信エラーが発生しました。';
                 alert('登録失敗: ' + message);
             }

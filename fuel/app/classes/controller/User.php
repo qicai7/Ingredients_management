@@ -1,18 +1,23 @@
 <?php
 class Controller_User extends Controller
 {
-    // 新規登録 (ビュー表示専用)
+    // 新規登録フォーム表示 (GETリクエスト専用)
     public function action_register()
     {
-        // $error 変数は、ビューに渡すために初期値として残します
-        $error = ''; 
-
-        // 従来のフォーム送信処理（Input::post() ブロック）は削除します
+        // 1. CSRFトークンの生成とセッションへの保存
+        // フォーム表示前に新しいトークンを確実に生成します。
+        $csrf_token = \Fuel\Core\Str::random('alnum', 32); 
+        \Fuel\Core\Session::set('csrf_token', $csrf_token);
         
-        // ビューを表示
-        return Response::forge(View::forge('user/register', ['error' => $error]));
+        $error = ''; 
+        
+        // ビューを表示　(user/register.php)
+        return \Fuel\Core\Response::forge(\Fuel\Core\View::forge('user/register', [
+            'error' => $error,
+            // 2. Viewにトークンを渡す
+            'csrf_token' => $csrf_token,
+        ]));
     }
-
 
     // ログイン
     public function action_login()
